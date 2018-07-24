@@ -16,6 +16,7 @@
 		46E5F0F420F7EB30001AF964 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E5F0F220F7EB30001AF964 /* Map.cpp */; };
 		46E5F19420FA382A001AF964 /* Components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E5F19320FA382A001AF964 /* Components.cpp */; };
 		46E5F19620FA3842001AF964 /* Ecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E5F19520FA3842001AF964 /* Ecs.cpp */; };
+		46E5F1BB21026684001AF964 /* ChessLogic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E5F1B921026684001AF964 /* ChessLogic.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,8 @@
 		46E5F19D20FCB6E5001AF964 /* Square3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Square3.png; path = "../../../../../Downloads/Chess Piskels/Square3.png"; sourceTree = "<group>"; };
 		46E5F19E20FCB6E5001AF964 /* square1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square1.png; path = "../../../../../Downloads/Chess Piskels/square1.png"; sourceTree = "<group>"; };
 		46E5F19F20FCB6E5001AF964 /* square2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square2.png; path = "../../../../../Downloads/Chess Piskels/square2.png"; sourceTree = "<group>"; };
+		46E5F1B921026684001AF964 /* ChessLogic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ChessLogic.cpp; sourceTree = "<group>"; };
+		46E5F1BA21026684001AF964 /* ChessLogic.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessLogic.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				4639E62020F6470F004ADC01 /* main.cpp */,
+				46E5F1B921026684001AF964 /* ChessLogic.cpp */,
+				46E5F1BA21026684001AF964 /* ChessLogic.hpp */,
 				46E5F11320F8CEE0001AF964 /* Components.hpp */,
 				46E5F19320FA382A001AF964 /* Components.cpp */,
 				46E5F0F620F80397001AF964 /* Ecs.hpp */,
@@ -208,6 +213,7 @@
 				46E5F0F020F7902E001AF964 /* GameObject.cpp in Sources */,
 				46E5F19420FA382A001AF964 /* Components.cpp in Sources */,
 				46E5F0F420F7EB30001AF964 /* Map.cpp in Sources */,
+				46E5F1BB21026684001AF964 /* ChessLogic.cpp in Sources */,
 				46E5F19620FA3842001AF964 /* Ecs.cpp in Sources */,
 				4639E62120F6470F004ADC01 /* main.cpp in Sources */,
 				4639E62E20F66E91004ADC01 /* Game.cpp in Sources */,

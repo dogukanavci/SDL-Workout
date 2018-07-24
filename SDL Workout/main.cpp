@@ -4,7 +4,7 @@
 
 #include "Game.hpp"
 using namespace std;
-int getImage();
+//int getImage();
 
 Game *game=nullptr;
 int main(int argc, const char * argv[]) {
@@ -12,7 +12,6 @@ int main(int argc, const char * argv[]) {
     const int FPS=60;
     const int frameDelay=1000/FPS;
     Uint32 frameStart;
-    cout<<"chess game"<<endl;
     int frameTime;
     game->Init("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
     while (game->running()) {
@@ -75,3 +74,5 @@ int getImage(){
     SDL_Quit();
     return 0;
 }
+
+

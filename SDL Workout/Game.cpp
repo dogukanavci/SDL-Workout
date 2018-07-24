@@ -40,7 +40,9 @@ GameObject *rockb1;
 GameObject *rockb2;
 GameObject *rockw1;
 GameObject *rockw2;
-
+std::vector <GameObject*> gameObjects;
+int order=1;
+GameObject *selectedGameObject;
 
 Map *map;
 SDL_Renderer* Game::renderer=nullptr;
@@ -75,40 +77,70 @@ void Game::Init(const char *title,int x,int y,int width,int height,bool fullScre
     else{
         isRunning=false;
     }
-    
-    pawnb1=new GameObject("pawns.png",0,80,0);
-    pawnb2=new GameObject("pawns.png",80,80,0);
-    pawnb3=new GameObject("pawns.png",160,80,0);
-    pawnb4=new GameObject("pawns.png",240,80,0);
-    pawnb5=new GameObject("pawns.png",320,80,0);
-    pawnb6=new GameObject("pawns.png",400,80,0);
-    pawnb7=new GameObject("pawns.png",480,80,0);
-    pawnb8=new GameObject("pawns.png",560,80,0);
-    pawnw1=new GameObject("pawns.png",0,480,1);
-    pawnw2=new GameObject("pawns.png",80,480,1);
-    pawnw3=new GameObject("pawns.png",160,480,1);
-    pawnw4=new GameObject("pawns.png",240,480,1);
-    pawnw5=new GameObject("pawns.png",320,480,1);
-    pawnw6=new GameObject("pawns.png",400,480,1);
-    pawnw7=new GameObject("pawns.png",480,480,1);
-    pawnw8=new GameObject("pawns.png",560,480,1);
-    knightb1=new GameObject("Knights.png",80,0,0);
-    knightb2=new GameObject("Knights.png",480,0,0);
-    knightw1=new GameObject("Knights.png",80,560,1);
-    knightw2=new GameObject("Knights.png",480,560,1);
-    bishopb1=new GameObject("Bishops.png",160,0,0);
-    bishopb2=new GameObject("Bishops.png",400,0,0);
-    bishopw1=new GameObject("Bishops.png",160,560,1);
-    bishopw2=new GameObject("Bishops.png",400,560,1);
-    queenb=new GameObject("Queens.png",320,0,0);
-    queenw=new GameObject("Queens.png",320,560,1);
-    checkb=new GameObject("Checks.png",240,0,0);
-    checkw=new GameObject("Checks.png",240,560,1);
-    rockb1=new GameObject("Rocks.png",0,0,0);
-    rockb2=new GameObject("Rocks.png",560,0,0);
-    rockw1=new GameObject("Rocks.png",0,560,1);
-    rockw2=new GameObject("Rocks.png",560,560,1);
-    
+        (pawnb1=new GameObject("pawns.png",0,80,1,0));
+        (pawnb2=new GameObject("pawns.png",80,80,1,0));
+        (pawnb3=new GameObject("pawns.png",160,80,1,0));
+        (pawnb4=new GameObject("pawns.png",240,80,1,0));
+        (pawnb5=new GameObject("pawns.png",320,80,1,0));
+        (pawnb6=new GameObject("pawns.png",400,80,1,0));
+        (pawnb7=new GameObject("pawns.png",480,80,1,0));
+        (pawnb8=new GameObject("pawns.png",560,80,1,0));
+        (pawnw1=new GameObject("pawns.png",0,480,1,1));
+        (pawnw2=new GameObject("pawns.png",80,480,1,1));
+        (pawnw3=new GameObject("pawns.png",160,480,1,1));
+        (pawnw4=new GameObject("pawns.png",240,480,1,1));
+        (pawnw5=new GameObject("pawns.png",320,480,1,1));
+        (pawnw6=new GameObject("pawns.png",400,480,1,1));
+        (pawnw7=new GameObject("pawns.png",480,480,1,1));
+        (pawnw8=new GameObject("pawns.png",560,480,1,1));
+        (knightb1=new GameObject("Knights.png",80,0,2,0));
+        (knightb2=new GameObject("Knights.png",480,0,2,0));
+        (knightw1=new GameObject("Knights.png",80,560,2,1));
+        (knightw2=new GameObject("Knights.png",480,560,2,1));
+        (bishopb1=new GameObject("Bishops.png",160,0,3,0));
+        (bishopb2=new GameObject("Bishops.png",400,0,3,0));
+        (bishopw1=new GameObject("Bishops.png",160,560,3,1));
+        (bishopw2=new GameObject("Bishops.png",400,560,3,1));
+        (queenb=new GameObject("Queens.png",240,0,5,0));
+        (queenw=new GameObject("Queens.png",240,560,5,1));
+        (checkb=new GameObject("Checks.png",320,0,6,0));
+        (checkw=new GameObject("Checks.png",320,560,6,1));
+        (rockb1=new GameObject("Rocks.png",0,0,4,0));
+        (rockb2=new GameObject("Rocks.png",560,0,4,0));
+        (rockw1=new GameObject("Rocks.png",0,560,4,1));
+        (rockw2=new GameObject("Rocks.png",560,560,4,1));
+    gameObjects.push_back(pawnb1);
+    gameObjects.push_back(pawnb2);
+    gameObjects.push_back(pawnb3);
+    gameObjects.push_back(pawnb4);
+    gameObjects.push_back(pawnb5);
+    gameObjects.push_back(pawnb6);
+    gameObjects.push_back(pawnb7);
+    gameObjects.push_back(pawnb8);
+    gameObjects.push_back(pawnw1);
+    gameObjects.push_back(pawnw2);
+    gameObjects.push_back(pawnw3);
+    gameObjects.push_back(pawnw4);
+    gameObjects.push_back(pawnw5);
+    gameObjects.push_back(pawnw6);
+    gameObjects.push_back(pawnw7);
+    gameObjects.push_back(pawnw8);
+    gameObjects.push_back(knightb1);
+    gameObjects.push_back(knightb2);
+    gameObjects.push_back(knightw1);
+    gameObjects.push_back(knightw2);
+    gameObjects.push_back(bishopb1);
+    gameObjects.push_back(bishopb2);
+    gameObjects.push_back(bishopw1);
+    gameObjects.push_back(bishopw2);
+    gameObjects.push_back(rockb1);
+    gameObjects.push_back(rockb2);
+    gameObjects.push_back(rockw1);
+    gameObjects.push_back(rockw2);
+    gameObjects.push_back(queenb);
+    gameObjects.push_back(queenw);
+    gameObjects.push_back(checkb);
+    gameObjects.push_back(checkw);
     //player=new GameObject("player.png",0,0,1);
     //bear=new GameObject("bear.png",60,30,1184);
     map=new Map();
@@ -123,44 +155,69 @@ void Game::handleEvents(){
         case SDL_QUIT:
             isRunning=false;
             break;
+        case SDL_MOUSEBUTTONDOWN:
+            if(event.button.button==SDL_BUTTON_LEFT){
+                int k=-1;
+                if(order==0 || order==1){
+                for(int i=0;i<32;i++){
+                    int x=gameObjects[i]->getX();
+                    int y=gameObjects[i]->getY();
+                    if(event.button.x/80==x/80 && event.button.y/80==y/80){
+                        k=i;
+                    }
+                }
+                    if (k==-1) {
+                        break;
+                    }
+                    if(gameObjects[k]->getFT()==order){
+                    int pieces[32][4];
+                        for(int i=0;i<32;i++){
+                            pieces[i][0]=gameObjects[i]->getX()/80;
+                            pieces[i][1]=gameObjects[i]->getY()/80;
+                            pieces[i][2]=gameObjects[i]->getFT();
+                            pieces[i][3]=gameObjects[i]->getType();
+                        }
+                    map->UpdateMap(gameObjects[k]->getType(), gameObjects[k]->getX()/80, gameObjects[k]->getY()/80,gameObjects[k]->getFT(),pieces);
+                    selectedGameObject=gameObjects[k];
+                    order=2;
+                    }
+                    
+                }
+                else if (order==2){
+                    for(int i=0;i<32;i++){
+                        int x=gameObjects[i]->getX();
+                        int y=gameObjects[i]->getY();
+                        if(event.button.x/80==x/80 && event.button.y/80==y/80){
+                            k=i;
+                        }
+                    }
+                    
+                    if(k!=-1 && gameObjects[k]!=selectedGameObject){
+                        gameObjects[k]->Dead();
+                        gameObjects.erase(gameObjects.begin()+k);
+                    }
+                selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
+                
+                map->Reset();
+                order=(selectedGameObject->getFT()+1)%2;
+                if(gameObjects[k]==selectedGameObject){
+                    order=selectedGameObject->getFT();
+                }
+                
+            }
+                //gameObjects[k]->UpdateCoordinates(gameObjects[k]->getX(),gameObjects[k]->getY()+160);
+            }
+            break;
             
         default:
             break;
     }
 }
 void Game::update (){
-    pawnb1->Update();
-    pawnb2->Update();
-    pawnb3->Update();
-    pawnb4->Update();
-    pawnb5->Update();
-    pawnb6->Update();
-    pawnb7->Update();
-    pawnb8->Update();
-    pawnw1->Update();
-    pawnw2->Update();
-    pawnw3->Update();
-    pawnw4->Update();
-    pawnw5->Update();
-    pawnw6->Update();
-    pawnw7->Update();
-    pawnw8->Update();
-    knightb1->Update();
-    knightb2->Update();
-    knightw1->Update();
-    knightw2->Update();
-    bishopb1->Update();
-    bishopb2->Update();
-    bishopw1->Update();
-    bishopw2->Update();
-    queenb->Update();
-    queenw->Update();
-    checkb->Update();
-    checkw->Update();
-    rockb1->Update();
-    rockb2->Update();
-    rockw1->Update();
-    rockw2->Update();
+    for(int i=0;i<gameObjects.size();i++){
+        gameObjects[i]->Update();
+    }
+    
     //player->Update();
     //bear->Update();
     manager.update();
@@ -169,39 +226,10 @@ void Game::update (){
 void Game::render(){
     SDL_RenderClear(renderer);
     map->DrawMap();
+    for(int i=0;i<gameObjects.size();i++){
+        gameObjects[i]->Render();
+    }
     
-    pawnb1->Render();
-    pawnb2->Render();
-    pawnb3->Render();
-    pawnb4->Render();
-    pawnb5->Render();
-    pawnb6->Render();
-    pawnb7->Render();
-    pawnb8->Render();
-    pawnw1->Render();
-    pawnw2->Render();
-    pawnw3->Render();
-    pawnw4->Render();
-    pawnw5->Render();
-    pawnw6->Render();
-    pawnw7->Render();
-    pawnw8->Render();
-    knightb1->Render();
-    knightb2->Render();
-    knightw1->Render();
-    knightw2->Render();
-    bishopb1->Render();
-    bishopb2->Render();
-    bishopw1->Render();
-    bishopw2->Render();
-    queenb->Render();
-    queenw->Render();
-    checkb->Render();
-    checkw->Render();
-    rockb1->Render();
-    rockb2->Render();
-    rockw1->Render();
-    rockw2->Render();
     //player->Render();
     //bear->Render();
     SDL_RenderPresent(renderer);

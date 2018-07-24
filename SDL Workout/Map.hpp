@@ -10,6 +10,7 @@
 #define Map_hpp
 
 #include <stdio.h>
+#include <math.h>
 #include "Game.hpp"
 
 class Map{
@@ -18,6 +19,8 @@ public:
     ~Map();
     void LoadMap(int map[8][8]);
     void DrawMap();
+    void UpdateMap(int pieceType,int x,int y,int fTotal,int pieces[32][4]);
+    void Reset();
 private:
     SDL_Rect srcR,desR;
     
