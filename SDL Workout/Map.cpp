@@ -97,14 +97,11 @@ void Map::Reset(){
     LoadMap(level1);
     DrawMap();
 }
-void Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
+void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
     int ctr=0;
+    int danger=0;
     //ctr 1= 1 move blocked pawn,2= 2 move blocked pawn,3-10=blocked knight
     for (int i=0; i<32; i++) {
-        int piTy=pieces[i][3];
-        int piFT=pieces[i][2];
-        int piY=pieces[i][1];
-        int piX=pieces[i][0];
         //pawn
         if(pieceType==1){
             if((((y+1)==pieces[i][1] && (x+1)==pieces[i][0])|| ((y+1)==pieces[i][1] && (x-1)==pieces[i][0])
@@ -194,7 +191,8 @@ void Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
             }
         }
         //check
-        if(pieceType==6 && pieces[i][2]==fTotal){
+        if(pieceType==6){
+            if(pieces[i][2]==fTotal){
             if(ctr==0)
                 ctr=1;
             if((y+1)==pieces[i][1] && (x+1)==pieces[i][0])
@@ -213,6 +211,13 @@ void Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
                 ctr=ctr*17;
             if((y-1)==pieces[i][1] && (x-1)==pieces[i][0])
                 ctr=ctr*19;
+            }
+            else{
+                for(int cnt=0;cnt<8;cnt++){
+                   // if((y+1+cnt)==pieces[i][1] && (x+1+cnt)==pieces[i][0] && (pieces[i][3]==3 || pieces[i][3]==5) && )
+                }
+            }
+            
         }
 
     }
