@@ -184,6 +184,12 @@ void Game::handleEvents(){
                     
                 }
                 else if (order==2){
+                    int control=0;
+                    std::vector <int> zeros=map->getMap();
+                    for(int ctr=0;ctr<zeros.size();ctr=ctr+2){
+                        if(zeros.at(ctr)==event.button.x/80 && zeros.at(ctr+1)==event.button.y/80)
+                            control=1;
+                    }
                     for(int i=0;i<32;i++){
                         int x=gameObjects[i]->getX();
                         int y=gameObjects[i]->getY();
@@ -191,20 +197,21 @@ void Game::handleEvents(){
                             k=i;
                         }
                     }
-                    
-                    if(k!=-1 && gameObjects[k]!=selectedGameObject){
+                    if(k!=-1 && gameObjects[k]!=selectedGameObject && control==1){
                         gameObjects[k]->Dead();
                         gameObjects.erase(gameObjects.begin()+k);
                     }
+                    if(control==1){
                 selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
                 
                 map->Reset();
                 order=(selectedGameObject->getFT()+1)%2;
+                }
                 if(gameObjects[k]==selectedGameObject){
                     order=selectedGameObject->getFT();
+                    map->Reset();
                 }
-                
-            }
+        }
                 //gameObjects[k]->UpdateCoordinates(gameObjects[k]->getX(),gameObjects[k]->getY()+160);
             }
             break;

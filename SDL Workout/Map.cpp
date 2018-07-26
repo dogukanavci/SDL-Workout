@@ -5,7 +5,6 @@
 //  Created by Doğukan Avcı on 12/07/2018.
 //  Copyright © 2018 dogukan avci. All rights reserved.
 //
-
 #include "Map.hpp"
 #include "TextureManager.hpp"
 #include "GameObject.hpp"
@@ -99,7 +98,6 @@ void Map::Reset(){
 }
 void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
     int ctr=0;
-    int danger=0;
     //ctr 1= 1 move blocked pawn,2= 2 move blocked pawn,3-10=blocked knight
     for (int i=0; i<32; i++) {
         //pawn
@@ -214,7 +212,8 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
             }
             else{
                 for(int cnt=0;cnt<8;cnt++){
-                   // if((y+1+cnt)==pieces[i][1] && (x+1+cnt)==pieces[i][0] && (pieces[i][3]==3 || pieces[i][3]==5) && )
+                    if((y+1+cnt)==pieces[i][1] && (x+1+cnt)==pieces[i][0] && (pieces[i][3]==3 || pieces[i][3]==5))
+                        std::cout<<"check diogonal at"<<pieces[i][1]<<" and "<<pieces[i][0]<<std::endl;
                 }
             }
             
@@ -376,4 +375,17 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
     }
     LoadMap(level1);
     DrawMap();
+}
+
+std::vector <int> Map::getMap(){
+    std::vector <int> zeros;
+    for(int i=0;i<8;i++){
+        for(int ctr=0;ctr<8;ctr++){
+            if(map[ctr][i]==0){
+                zeros.push_back(i);
+                zeros.push_back(ctr);
+            }
+        }
+    }
+    return zeros;
 }
