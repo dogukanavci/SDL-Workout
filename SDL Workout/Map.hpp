@@ -10,11 +10,12 @@
 #define Map_hpp
 
 #include <iostream>
-#include <stdio.h>
+//#include <stdio.h>
 #include <vector>
-#include <string>
+//#include <string>
 //#include <math.h>
 #include "Game.hpp"
+#include "GameObject.hpp"
 
 class Map{
 public:
@@ -22,7 +23,7 @@ public:
     ~Map();
     void LoadMap(int map[8][8]);
     void DrawMap();
-    void UpdateMap(int pieceType,int x,int y,int fTotal,int pieces[32][4]);
+    void UpdateMap(int pieceType,int x,int y,int fTotal,int pieces[32][4],std::vector <GameObject*> objects);
     std:: vector <int> getMap();
     void Reset();
 private:

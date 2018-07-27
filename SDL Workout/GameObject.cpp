@@ -39,3 +39,6 @@ void GameObject::Update(){
 void GameObject::Render(){
         SDL_RenderCopy(Game::renderer, objTex, &srcRect, &desRec);
 }
+/*std::vector <GameObject*> GameObject::findPieceType(int type){
+    
+}*/

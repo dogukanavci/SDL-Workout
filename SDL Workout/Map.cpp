@@ -96,10 +96,12 @@ void Map::Reset(){
     LoadMap(level1);
     DrawMap();
 }
-void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
+void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4],std::vector <GameObject*> objects){
     int ctr=0;
     //ctr 1= 1 move blocked pawn,2= 2 move blocked pawn,3-10=blocked knight
     for (int i=0; i<32; i++) {
+        if(pieces[i][3]==6 && pieces[i][2]!=fTotal)
+            continue;
         //pawn
         if(pieceType==1){
             if((((y+1)==pieces[i][1] && (x+1)==pieces[i][0])|| ((y+1)==pieces[i][1] && (x-1)==pieces[i][0])
@@ -190,9 +192,9 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
         }
         //check
         if(pieceType==6){
-            if(pieces[i][2]==fTotal){
             if(ctr==0)
                 ctr=1;
+            if(pieces[i][2]==fTotal){
             if((y+1)==pieces[i][1] && (x+1)==pieces[i][0])
                 ctr=ctr*2;
             if((y)==pieces[i][1] && (x+1)==pieces[i][0])
@@ -211,10 +213,7 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
                 ctr=ctr*19;
             }
             else{
-                for(int cnt=0;cnt<8;cnt++){
-                    if((y+1+cnt)==pieces[i][1] && (x+1+cnt)==pieces[i][0] && (pieces[i][3]==3 || pieces[i][3]==5))
-                        std::cout<<"check diogonal at"<<pieces[i][1]<<" and "<<pieces[i][0]<<std::endl;
-                }
+                UpdateMap(pieces[i][3], pieces[i][0], pieces[i][1], pieces[i][2], pieces, objects);
             }
             
         }
@@ -308,6 +307,8 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
         }
         ctr=0;
     for (int i=0; i<32; i++) {
+        if(pieces[i][3]==6 && pieces[i][2]!=fTotal)
+            continue;
         for(int cnt=8;cnt>0;cnt--){
             if((x+cnt)==pieces[i][0] && (y)==pieces[i][1] && ((ctr%512%64%8==0) || (ctr%512%64%8>cnt)) ){
                 ctr=(ctr-(ctr%512%64%8))+cnt;
@@ -351,28 +352,69 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4]){
     else if(pieceType==6){
         double ctrD=(double) ctr;
         if(x-1>-1 && x-1<8){
-            if(y-1>-1 && y-1<8 && (fmod(ctrD/19,1.0)!=0))
-                level1[y-1][x-1]=0;
-            if(y>-1 && y<8 && (fmod(ctrD/17,1.0)!=0))
-                level1[y][x-1]=0;
-            if(y+1>-1 && y+1<8 && (fmod(ctrD/13,1.0)!=0))
-                level1[y+1][x-1]=0;
+            if(y-1>-1 && y-1<8 ){
+                if(level1[y-1][x-1]!=0 && (fmod(ctrD/19,1.0)!=0))
+                    level1[y-1][x-1]=0;
+                else
+                    level1[y-1][x-1]=2-(y+x-2)%2;
+            }
+            if(y>-1 && y<8 ){
+                if(level1[y][x-1]!=0 && (fmod(ctrD/17,1.0)!=0))
+                    level1[y][x-1]=0;
+                else
+                    level1[y][x-1]=2-(y+x-1)%2;
+            }
+            if(y+1>-1 && y+1<8 ){
+                if(level1[y+1][x-1]!=0 && (fmod(ctrD/13,1.0)!=0))
+                    level1[y+1][x-1]=0;
+                else{
+                    level1[y+1][x-1]=2-(y+x)%2;
+                }
+            }
         }
         if(x>-1 && x<8){
-            if(y-1>-1 && y-1<8 && (fmod(ctrD/11,1.0)!=0))
-                level1[y-1][x]=0;
-            if(y+1>-1 && y+1<8 && (fmod(ctrD/7,1.0)!=0))
-                level1[y+1][x]=0;
+            if(y-1>-1 && y-1<8 ){
+                if(level1[y-1][x]!=0 && (fmod(ctrD/11,1.0)!=0))
+                    level1[y-1][x]=0;
+                else
+                    level1[y-1][x]=2-(y+x-1)%2;
+            }
+            if(y+1>-1 && y+1<8 ){
+                if(level1[y+1][x]!=0 && (fmod(ctrD/7,1.0)!=0))
+                    level1[y+1][x]=0;
+                else if(level1[y+1][x]==0 || !(fmod(ctrD/7,1.0)!=0))
+                    level1[y+1][x]=2-(y+x+1)%2;
+            }
         }
         if(x+1>-1 && x+1<8){
-            if(y-1>-1 && y-1<8 && (fmod(ctrD/5,1.0)!=0))
-                level1[y-1][x+1]=0;
-            if(y>-1 && y<8 && (fmod(ctrD/3,1.0)!=0))
-                level1[y][x+1]=0;
-            if(y+1>-1 && y+1<8 && (fmod(ctrD/2,1.0)!=0))
-                level1[y+1][x+1]=0;
+            if(y-1>-1 && y-1<8){
+                if(level1[y-1][x+1]!=0 && (fmod(ctrD/5,1.0)!=0))
+                    level1[y-1][x+1]=0;
+                else if(level1[y-1][x+1]==0 || !(fmod(ctrD/5,1.0)!=0))
+                    level1[y-1][x+1]=2-(y+x)%2;
+            }
+            if(y>-1 && y<8 ){
+                if(level1[y][x+1]!=0 && (fmod(ctrD/3,1.0)!=0))
+                    level1[y][x+1]=0;
+                else if(level1[y][x+1]==0 || !(fmod(ctrD/3,1.0)!=0))
+                    level1[y][x+1]=2-(y+x+1)%2;
+            }
+            if(y+1>-1 && y+1<8 ){
+                if(level1[y+1][x+1]!=0 && (fmod(ctrD/2,1.0)!=0))
+                    level1[y+1][x+1]=0;
+                else if(level1[y+1][x+1]==0 || !(fmod(ctrD/2,1.0)!=0))
+                    level1[y+1][x+1]=2-(y+x+2)%2;
+            }
+        }
+        for(int i=0;i<8;i++){
+            for(int ctr=0;ctr<8;ctr++){
+                if(((ctr==x+1) && ((i==y+1)||(i==y)||(i==y-1)))||((ctr==x-1) && ((i==y+1)||(i==y)||(i==y-1)))||((ctr==x) && ((i==y+1)||(i==y-1))))
+                    continue;
+                level1[i][ctr]=2-(i+ctr)%2;
+            }
         }
     }
+    ctr=0;
     LoadMap(level1);
     DrawMap();
 }

@@ -177,7 +177,7 @@ void Game::handleEvents(){
                             pieces[i][2]=gameObjects[i]->getFT();
                             pieces[i][3]=gameObjects[i]->getType();
                         }
-                    map->UpdateMap(gameObjects[k]->getType(), gameObjects[k]->getX()/80, gameObjects[k]->getY()/80,gameObjects[k]->getFT(),pieces);
+                    map->UpdateMap(gameObjects[k]->getType(), gameObjects[k]->getX()/80, gameObjects[k]->getY()/80,gameObjects[k]->getFT(),pieces,gameObjects);
                     selectedGameObject=gameObjects[k];
                     order=2;
                     }
@@ -211,9 +211,9 @@ void Game::handleEvents(){
                     order=selectedGameObject->getFT();
                     map->Reset();
                 }
-        }
-                //gameObjects[k]->UpdateCoordinates(gameObjects[k]->getX(),gameObjects[k]->getY()+160);
             }
+                //gameObjects[k]->UpdateCoordinates(gameObjects[k]->getX(),gameObjects[k]->getY()+160);
+        }
             break;
             
         default:

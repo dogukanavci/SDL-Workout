@@ -9,7 +9,7 @@
 #ifndef GameObject_hpp
 #define GameObject_hpp
 
-#include <stdio.h>
+#include <iostream>
 #include "Game.hpp"
 
 class GameObject{
@@ -27,6 +27,7 @@ public:
     void UpdateCoordinates(int x,int y);
     void Update();
     void Render();
+    std::vector <GameObject*> findPieceType(int type);
     void Dead(){type=7+frameTotal;}
     void setType(int chessType) { type=chessType;}
     int getFT() {return frameTotal;}
