@@ -44,11 +44,8 @@
 		46E5F0F220F7EB30001AF964 /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		46E5F0F320F7EB30001AF964 /* Map.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Map.hpp; sourceTree = "<group>"; };
 		46E5F0F620F80397001AF964 /* Ecs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ecs.hpp; sourceTree = "<group>"; };
-		46E5F10B20F8AC43001AF964 /* SMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SMan.png; sourceTree = "<group>"; };
-		46E5F10C20F8AC43001AF964 /* bear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bear.png; sourceTree = "<group>"; };
 		46E5F10D20F8AC43001AF964 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
 		46E5F10E20F8AC43001AF964 /* dirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dirt.png; sourceTree = "<group>"; };
-		46E5F10F20F8AC43001AF964 /* player2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player2.png; sourceTree = "<group>"; };
 		46E5F11020F8AC43001AF964 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		46E5F11120F8AC43001AF964 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		46E5F11320F8CEE0001AF964 /* Components.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Components.hpp; sourceTree = "<group>"; };
@@ -128,7 +125,6 @@
 		46E5F0EB20F7848D001AF964 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				46E5F10C20F8AC43001AF964 /* bear.png */,
 				46E5F19E20FCB6E5001AF964 /* square1.png */,
 				46E5F19F20FCB6E5001AF964 /* square2.png */,
 				46E5F19D20FCB6E5001AF964 /* Square3.png */,
@@ -141,8 +137,6 @@
 				46E5F19C20FCB62C001AF964 /* Knights.png */,
 				46E5F10D20F8AC43001AF964 /* grass.png */,
 				46E5F11120F8AC43001AF964 /* player.png */,
-				46E5F10F20F8AC43001AF964 /* player2.png */,
-				46E5F10B20F8AC43001AF964 /* SMan.png */,
 				46E5F11020F8AC43001AF964 /* water.png */,
 			);
 			path = Assets;
