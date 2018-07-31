@@ -10,7 +10,9 @@
 #define GameObject_hpp
 
 #include <iostream>
+#include <vector>
 #include "Game.hpp"
+#include "Map.hpp"
 
 class GameObject{
 private:
@@ -21,6 +23,7 @@ private:
     int frameTotal;
     SDL_Texture *objTex;
     SDL_Rect srcRect,desRec;
+    bool played;
 public:
     GameObject(std::string texture,int x,int y,int chessType,int frameTotal);
     ~GameObject();
@@ -33,7 +36,10 @@ public:
     int getFT() {return frameTotal;}
     int getX() {return xPos;}
     int getType() {return type;}
+    bool getPlayed() {return played;}
+    void setPlayed() {played=true;}
     int getY() {return yPos;}
+    int causesCheckThreat(GameObject* obj,std::vector <GameObject*> gameObjects);
 };
 
 

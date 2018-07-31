@@ -42,6 +42,7 @@ GameObject *rockw1;
 GameObject *rockw2;
 std::vector <GameObject*> gameObjects;
 int order=1;
+int check=0; //0=no check,1=black checked,2=white checked
 GameObject *selectedGameObject;
 
 Map *map;
@@ -170,14 +171,15 @@ void Game::handleEvents(){
                         break;
                     }
                     if(gameObjects[k]->getFT()==order){
-                    int pieces[32][4];
+                    int pieces[32][5];
                         for(int i=0;i<32;i++){
                             pieces[i][0]=gameObjects[i]->getX()/80;
                             pieces[i][1]=gameObjects[i]->getY()/80;
                             pieces[i][2]=gameObjects[i]->getFT();
                             pieces[i][3]=gameObjects[i]->getType();
+                            pieces[i][4]=gameObjects[i]->getPlayed();
                         }
-                    map->UpdateMap(gameObjects[k]->getType(), gameObjects[k]->getX()/80, gameObjects[k]->getY()/80,gameObjects[k]->getFT(),pieces,gameObjects);
+                    map->UpdateMap(gameObjects[k]->getType(), gameObjects[k]->getX()/80, gameObjects[k]->getY()/80,gameObjects[k]->getFT(),gameObjects[k]->getPlayed(),pieces);
                     selectedGameObject=gameObjects[k];
                     order=2;
                     }
@@ -187,8 +189,17 @@ void Game::handleEvents(){
                     int control=0;
                     std::vector <int> zeros=map->getMap();
                     for(int ctr=0;ctr<zeros.size();ctr=ctr+2){
-                        if(zeros.at(ctr)==event.button.x/80 && zeros.at(ctr+1)==event.button.y/80)
+                        if(zeros.at(ctr)==event.button.x/80 && zeros.at(ctr+1)==event.button.y/80){
                             control=1;
+                        }
+                    }
+                    if(map->getSquareTexValue(event.button.x/80, event.button.y/80)==3){
+                        if(event.button.x/80==2)
+                            control=2;
+                        //long rook
+                        else
+                            control=3;
+                        //short rook
                     }
                     for(int i=0;i<32;i++){
                         int x=gameObjects[i]->getX();
@@ -201,9 +212,61 @@ void Game::handleEvents(){
                         gameObjects[k]->Dead();
                         gameObjects.erase(gameObjects.begin()+k);
                     }
-                    if(control==1){
+                    if(control!=0){
+                        if (control==2 && check==0) {
+                            if(selectedGameObject->getFT()==0)
+                                rockb1->UpdateCoordinates((event.button.x/80+1)*80, (event.button.y/80)*80);
+                            else
+                                rockw1->UpdateCoordinates((event.button.x/80+1)*80, (event.button.y/80)*80);
+                        }
+                        if (control==3 && check==0) {
+                            if(selectedGameObject->getFT()==0)
+                                rockb2->UpdateCoordinates((event.button.x/80-1)*80, (event.button.y/80)*80);
+                            else
+                                rockw2->UpdateCoordinates((event.button.x/80-1)*80, (event.button.y/80)*80);
+                        }
+                if (check==0) {
                 selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
-                
+                selectedGameObject->setPlayed();
+                }
+                else{
+                    if(selectedGameObject->getFT()==0){
+                        int x=selectedGameObject->getX();
+                        int y=selectedGameObject->getY();
+                        selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
+                        if (checkb->causesCheckThreat(checkb,gameObjects)==1) {
+                            selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
+                            order=selectedGameObject->getFT();
+                            map->Reset();
+                            break;
+                        }
+                        else{
+                            check=0;
+                        }
+                    }
+                    if(selectedGameObject->getFT()==1){
+                        int x=selectedGameObject->getX();
+                        int y=selectedGameObject->getY();
+                        selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
+                        if (checkw->causesCheckThreat(checkw,gameObjects)==2) {
+                            selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
+                            order=selectedGameObject->getFT();
+                            map->Reset();
+                            break;
+                        }
+                        else{
+                            check=0;
+                        }
+                    }
+                }
+                if(selectedGameObject->getFT()==0 && check==0){
+                    check=checkw->causesCheckThreat(checkw,gameObjects);
+                    std::cout<<"check state is "<<check<<std::endl;
+                }
+                else if(selectedGameObject->getFT()==1 && check==0){
+                    check=checkb->causesCheckThreat(checkb,gameObjects);
+                    std::cout<<"check state is "<<check<<std::endl;
+                }
                 map->Reset();
                 order=(selectedGameObject->getFT()+1)%2;
                 }
@@ -212,7 +275,6 @@ void Game::handleEvents(){
                     map->Reset();
                 }
             }
-                //gameObjects[k]->UpdateCoordinates(gameObjects[k]->getX(),gameObjects[k]->getY()+160);
         }
             break;
             

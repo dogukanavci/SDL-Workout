@@ -15,7 +15,6 @@
 //#include <string>
 //#include <math.h>
 #include "Game.hpp"
-#include "GameObject.hpp"
 
 class Map{
 public:
@@ -23,7 +22,8 @@ public:
     ~Map();
     void LoadMap(int map[8][8]);
     void DrawMap();
-    void UpdateMap(int pieceType,int x,int y,int fTotal,int pieces[32][4],std::vector <GameObject*> objects);
+    void UpdateMap(int pieceType,int x,int y,int fTotal,bool played,int pieces[32][5]);
+    int getSquareTexValue(int x,int y){return map[y][x];}
     std:: vector <int> getMap();
     void Reset();
 private:

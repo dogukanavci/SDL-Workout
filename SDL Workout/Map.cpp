@@ -81,6 +81,8 @@ void Map::DrawMap(){
                 case 2:
                     TextureManager::Draw(square2, srcR, desR);
                     break;
+                case 3:
+                    TextureManager::Draw(dirt, srcR, desR);
                 default:
                     break;
             }
@@ -96,9 +98,11 @@ void Map::Reset(){
     LoadMap(level1);
     DrawMap();
 }
-void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4],std::vector <GameObject*> objects){
+void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,bool played,int pieces[32][5]){
     int ctr=0;
-    //ctr 1= 1 move blocked pawn,2= 2 move blocked pawn,3-10=blocked knight
+    //ctr 1= 1 move blocked pawn,2= 2 move blocked pawn
+    int rookChecker=0;
+    // =1 short rook, =8 long rook, =0 no rook ,possibility
     for (int i=0; i<32; i++) {
         if(pieces[i][3]==6 && pieces[i][2]!=fTotal)
             continue;
@@ -195,25 +199,46 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4],std
             if(ctr==0)
                 ctr=1;
             if(pieces[i][2]==fTotal){
-            if((y+1)==pieces[i][1] && (x+1)==pieces[i][0])
-                ctr=ctr*2;
-            if((y)==pieces[i][1] && (x+1)==pieces[i][0])
-                ctr=ctr*3;
-            if((y-1)==pieces[i][1] && (x+1)==pieces[i][0])
-                ctr=ctr*5;
-            if((y+1)==pieces[i][1] && (x)==pieces[i][0])
-                ctr=ctr*7;
-            if((y-1)==pieces[i][1] && (x)==pieces[i][0])
-                ctr=ctr*11;
-            if((y+1)==pieces[i][1] && (x-1)==pieces[i][0])
-                ctr=ctr*13;
-            if((y)==pieces[i][1] && (x-1)==pieces[i][0])
-                ctr=ctr*17;
-            if((y-1)==pieces[i][1] && (x-1)==pieces[i][0])
-                ctr=ctr*19;
+                //for rook
+                if(pieces[i][3]==4 && pieces[i][4]==false && played==false){
+                    rookChecker=rookChecker+pieces[i][0]+1;
+                }
+                if((y)==pieces[i][1] && (x+2)==pieces[i][0])
+                    ctr=ctr*23;
+                if((y)==pieces[i][1] && (x-2)==pieces[i][0])
+                    ctr=ctr*29;
+                //for regular movement
+                if((y+1)==pieces[i][1] && (x+1)==pieces[i][0])
+                    ctr=ctr*2;
+                if((y)==pieces[i][1] && (x+1)==pieces[i][0])
+                    ctr=ctr*3;
+                //also for rook
+                if((y-1)==pieces[i][1] && (x+1)==pieces[i][0])
+                    ctr=ctr*5;
+                if((y+1)==pieces[i][1] && (x)==pieces[i][0])
+                    ctr=ctr*7;
+                if((y-1)==pieces[i][1] && (x)==pieces[i][0])
+                    ctr=ctr*11;
+                if((y+1)==pieces[i][1] && (x-1)==pieces[i][0])
+                    ctr=ctr*13;
+                if((y)==pieces[i][1] && (x-1)==pieces[i][0])
+                    ctr=ctr*17;
+                //also for rook
+                if((y-1)==pieces[i][1] && (x-1)==pieces[i][0])
+                    ctr=ctr*19;
             }
             else{
-                UpdateMap(pieces[i][3], pieces[i][0], pieces[i][1], pieces[i][2], pieces, objects);
+                if(pieces[i][3]!=1){
+                    UpdateMap(pieces[i][3], pieces[i][0], pieces[i][1], pieces[i][2],pieces[i][4], pieces);
+                }
+                else{
+                    if (pieces[i][0]>0 &&  pieces[i][0]<9 && pieces[i][1]+2*fTotal>0 && pieces[i][1]+2*fTotal<9) {
+                        level1[pieces[i][1]-1+2*fTotal][pieces[i][0]-1]=0;
+                    }
+                    if (pieces[i][0]>-2 &&  pieces[i][0]<7 && pieces[i][1]+2*fTotal>0 && pieces[i][1]+2*fTotal<9) {
+                        level1[pieces[i][1]-1+2*fTotal][pieces[i][0]+1]=0;
+                    }
+                }
             }
             
         }
@@ -406,9 +431,25 @@ void  Map::UpdateMap(int pieceType, int x,int y,int fTotal,int pieces[32][4],std
                     level1[y+1][x+1]=2-(y+x+2)%2;
             }
         }
+        if(y>-1 && y<8){
+                if(x+2>-2 && x+2<8){
+                    //short rook
+                    if(level1[y][x+2]!=0 && (fmod(ctrD/23,1.0)!=0) && level1[y][x+1]==0 && (rookChecker==8 || rookChecker==9))
+                        level1[y][x+2]=3;
+                }
+                if(x-2>-2 && x-2<8){
+                    //long rook
+                    if(level1[y][x-2]!=0 && (fmod(ctrD/29,1.0)!=0) && level1[y][x-1]==0 && (rookChecker==1 || rookChecker==9))
+                        level1[y][x-2]=3;
+                }
+        }
         for(int i=0;i<8;i++){
             for(int ctr=0;ctr<8;ctr++){
                 if(((ctr==x+1) && ((i==y+1)||(i==y)||(i==y-1)))||((ctr==x-1) && ((i==y+1)||(i==y)||(i==y-1)))||((ctr==x) && ((i==y+1)||(i==y-1))))
+                    continue;
+                if((rookChecker==9 || rookChecker==1) && ctr==x-2 && i==y)
+                    continue;
+                if((rookChecker==9 || rookChecker==8) && ctr==x+2 && i==y)
                     continue;
                 level1[i][ctr]=2-(i+ctr)%2;
             }
