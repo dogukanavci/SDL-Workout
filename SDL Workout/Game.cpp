@@ -225,44 +225,17 @@ void Game::handleEvents(){
                             else
                                 rockw2->UpdateCoordinates((event.button.x/80-1)*80, (event.button.y/80)*80);
                         }
-                if (check==0) {
-                selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
-                selectedGameObject->setPlayed();
-                }
-                else{
-                    if(selectedGameObject->getFT()==0){
                         int x=selectedGameObject->getX();
                         int y=selectedGameObject->getY();
                         selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
-                        if (checkb->causesCheckThreat(checkb,gameObjects)==1) {
+                    if(((selectedGameObject->getFT()==0 && checkb->causesCheckThreat(checkb,gameObjects)==1)||(selectedGameObject->getFT()==1 && checkw->causesCheckThreat(checkw,gameObjects)==2))){
                             selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
                             SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_INFORMATION,"Wrong move", "You are checked!", window);
                             order=selectedGameObject->getFT();
                             map->Reset();
                             break;
                         }
-                        else{
-                            selectedGameObject->setPlayed();
-                            check=0;
-                        }
-                    }
-                    if(selectedGameObject->getFT()==1){
-                        int x=selectedGameObject->getX();
-                        int y=selectedGameObject->getY();
-                        selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
-                        if (checkw->causesCheckThreat(checkw,gameObjects)==2) {
-                            selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
-                            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_INFORMATION,"Wrong move", "You are checked!", window);
-                            order=selectedGameObject->getFT();
-                            map->Reset();
-                            break;
-                        }
-                        else{
-                            selectedGameObject->setPlayed();
-                            check=0;
-                        }
-                    }
-                }
+                        selectedGameObject->setPlayed();
                 if(selectedGameObject->getFT()==0 && check==0){
                     check=checkw->causesCheckThreat(checkw,gameObjects);
                     std::cout<<"check state is "<<check<<std::endl;
