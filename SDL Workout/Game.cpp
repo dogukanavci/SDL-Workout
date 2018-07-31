@@ -236,11 +236,13 @@ void Game::handleEvents(){
                         selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
                         if (checkb->causesCheckThreat(checkb,gameObjects)==1) {
                             selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
+                            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_INFORMATION,"Wrong move", "You are checked!", window);
                             order=selectedGameObject->getFT();
                             map->Reset();
                             break;
                         }
                         else{
+                            selectedGameObject->setPlayed();
                             check=0;
                         }
                     }
@@ -250,11 +252,13 @@ void Game::handleEvents(){
                         selectedGameObject->UpdateCoordinates((event.button.x/80)*80,(event.button.y/80)*80);
                         if (checkw->causesCheckThreat(checkw,gameObjects)==2) {
                             selectedGameObject->UpdateCoordinates((x/80)*80,(y/80)*80);
+                            SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_INFORMATION,"Wrong move", "You are checked!", window);
                             order=selectedGameObject->getFT();
                             map->Reset();
                             break;
                         }
                         else{
+                            selectedGameObject->setPlayed();
                             check=0;
                         }
                     }
